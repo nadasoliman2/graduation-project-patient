@@ -11,16 +11,49 @@ import  sarah from "../src/assets/dr.sarah.png";
 import { useEffect } from "react";
 import WowClient from "../_componets/WowClient";
 import { motion } from "framer-motion";
+import Chatbot from "../_componets/chatbot";
+import { useForm } from "react-hook-form";
+import { useState } from "react";
+import  contactus from "../src/assets/contactus.png";
+export  default  function Clinify() {
+const [loading, setLoading] = useState(false);
 
-export default function Clinify() {
-    
+    const doctors = [
+  { img: ahmed, name: "Dr. Ahmed", specialty: "Internist" },
+  { img: hamza, name: "Dr. Hamza", specialty: "Cardiologist" },
+  { img: sarah, name: "Dr. Sarah", specialty: "Dermatologist" },
+];
+const {register,reset, handleSubmit ,formState:{errors}}=useForm();
+const onSubmit = async (data: any) => {
+  try {
+    setLoading(true); // شغل الـ spinner
+    const response = await fetch("/api/send-email", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(data),
+    });
+
+    const result = await response.json();
+
+    if (response.ok) {
+      reset(); // تفريغ الفورم بعد الإرسال
+    } else {
+      alert("Error: " + result.message);
+    }
+  } catch (error: any) {
+    alert("Error: " + error.message);
+  } finally {
+    setLoading(false); // وقف الـ spinner بعد الانتهاء
+  }
+};
+
   return (
     <>
           <WowClient /> {/* مهم لتشغيل WOW.js */}
 
       {/* HERO SECTION */}
       <div
-        className="min-h-screen bg-gray-50 flex flex-col md:flex-row items-center justify-between px-6 md:px-20 py-20 gap-10"
+        className="min-h-screen bg-gray-50 flex flex-col md:flex-row items-center justify-between px-4 md:px-20 py-18 gap-10"
         style={{ "--color-main": "#11A4D4" }}
       >
         {/* Left */}
@@ -39,7 +72,7 @@ export default function Clinify() {
             Comprehensive outpatient services, expert physicians, and an easy
             booking experience through our friendly chatbot.
           </p>
-          <div className="flex gap-4 mt-4">
+          <div className="flex gap-4 mt-4" >
             <button className="px-6 py-3 rounded-lg bg-[var(--color-main)] text-white font-semibold hover:bg-[#0e8bb4] transition">
               Book Appointment
             </button>
@@ -70,9 +103,106 @@ export default function Clinify() {
           </div>
         </motion.div>
       </div>
+  {/* DOCTORS */}
+      <section id="doctors" className="py-24 bg-white">
+        <div className="max-w-6xl mx-auto px-6 text-center">
+          <motion.h2
+            className="text-3xl md:text-4xl font-extrabold text-gray-900"
+            initial={{ y: -50, opacity: 0 }}
+            whileInView={{ y: 0, opacity: 1 }}
+            transition={{ duration: 0.8 }}
+            viewport={{ once: true }}
+            style={{ willChange: "transform, opacity" }} 
+          >
+            Meet Our <span className="text-[#11A4D4]">Doctors</span>
+          </motion.h2>
+          <motion.p
+            className="mt-4 text-gray-600 max-w-2xl mx-auto"
+            initial={{ y: 50, opacity: 0 }}
+            whileInView={{ y: 0, opacity: 1 }}
+            transition={{ duration: 0.8 }}
+            viewport={{ once: true }}
+            style={{ willChange: "transform, opacity" }} 
+          >
+            Our team of highly skilled and compassionate professionals.
+          </motion.p>
 
+          <div className="mt-14 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-12">
+            {doctors.map((doc, i) => (
+              <div
+                key={i}
+                className="bg-white p-8 rounded-3xl shadow-md hover:shadow-2xl transition transform hover:-translate-y-2"
+               
+              >
+                <div className="w-40 mb-4 h-40 mx-auto rounded-full overflow-hidden border-4 bg-[#0096FF] border-[#11A4D4] shadow-lg">
+                  <Image
+                    src={doc.img}
+                    alt="Doctor"
+                    width={160}
+                    height={160}
+                    className="object-cover"
+                  />
+                </div>
+                <h2 className="text-[#11A4D4]">{doc.name}</h2>
+                <p className="text-gray-400">{doc.specialty}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
       {/* WHY PATIENTS TRUST US */}
-      <section className="py-24 bg-white">
+    
+      {/* SERVICES */}
+      <section id="services" className="py-20 bg-gray-50">
+        <div className="max-w-6xl mx-auto px-6 text-center">
+          <motion.h2
+            className="text-3xl md:text-4xl font-extrabold text-gray-900"
+            initial={{ y: -50, opacity: 0 }}
+            whileInView={{ y: 0, opacity: 1 }}
+            transition={{ duration: 0.8 }}
+            viewport={{ once: true }}
+            style={{ willChange: "transform, opacity" }} 
+          >
+            Our <span className="text-[#11A4D4]">Services</span>
+          </motion.h2>
+          <motion.p
+            className="mt-3 text-gray-600 max-w-2xl mx-auto"
+            initial={{ y: 50, opacity: 0 }}
+            whileInView={{ y: 0, opacity: 1 }}
+            transition={{ duration: 0.8 }}
+            viewport={{ once: true }}
+            style={{ willChange: "transform, opacity" }} 
+          >
+            Providing high-quality medical care through expert specialists in multiple departments.
+          </motion.p>
+
+          <div className="mt-14 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
+            {[
+              { icon: "fa-heart", title: "Cardiology", text: "Advanced diagnosis & treatment for heart-related conditions." },
+              { icon: "fa-spray-can-sparkles", title: "Dermatology", text: "Skin treatments, laser therapy & cosmetic dermatology." },
+              { icon: "fa-brain", title: "Neurology", text: "Specialized care for nervous system disorders." },
+            ].map((item, i) => (
+              <div
+                key={i}
+                className="group bg-white p-8 rounded-2xl shadow-sm hover:shadow-xl border border-gray-100 hover:border-[#11A4D4]/40 transition duration-300"
+                
+              >
+                <div className="w-16 h-16 mx-auto flex items-center justify-center rounded-full 
+                bg-[#11A4D4]/10 group-hover:bg-[#11A4D4]/20 text-[#11A4D4] text-3xl transition">
+                  <i className={`fa-solid ${item.icon}`}></i>
+                </div>
+                <h3 className="mt-6 text-xl font-semibold text-gray-900">{item.title}</h3>
+                <p className="mt-2 text-gray-600 text-sm">{item.text}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+    
+   
+
+  <section className="py-24 bg-white">
         <div className="max-w-6xl mx-auto px-6 text-center">
           <motion.h2
             className="text-3xl md:text-4xl font-extrabold text-gray-900"
@@ -155,148 +285,130 @@ export default function Clinify() {
           </div>
         </div>
       </section>
-      {/* SERVICES */}
-      <section id="services" className="py-20 bg-gray-50">
-        <div className="max-w-6xl mx-auto px-6 text-center">
-          <motion.h2
-            className="text-3xl md:text-4xl font-extrabold text-gray-900"
-            initial={{ y: -50, opacity: 0 }}
-            whileInView={{ y: 0, opacity: 1 }}
-            transition={{ duration: 0.8 }}
-            viewport={{ once: true }}
-            style={{ willChange: "transform, opacity" }} 
-          >
-            Our <span className="text-[#11A4D4]">Services</span>
-          </motion.h2>
-          <motion.p
-            className="mt-3 text-gray-600 max-w-2xl mx-auto"
-            initial={{ y: 50, opacity: 0 }}
-            whileInView={{ y: 0, opacity: 1 }}
-            transition={{ duration: 0.8 }}
-            viewport={{ once: true }}
-            style={{ willChange: "transform, opacity" }} 
-          >
-            Providing high-quality medical care through expert specialists in multiple departments.
-          </motion.p>
-
-          <div className="mt-14 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
-            {[
-              { icon: "fa-heart", title: "Cardiology", text: "Advanced diagnosis & treatment for heart-related conditions." },
-              { icon: "fa-tooth", title: "Dentistry", text: "Professional dental care including cleaning & whitening." },
-              { icon: "fa-children", title: "Pediatrics", text: "Dedicated care for infants, children, & teenagers." },
-              { icon: "fa-spray-can-sparkles", title: "Dermatology", text: "Skin treatments, laser therapy & cosmetic dermatology." },
-              { icon: "fa-bone", title: "Orthopedics", text: "Bone, joint & sports injury care with expert specialists." },
-              { icon: "fa-brain", title: "Neurology", text: "Specialized care for nervous system disorders." },
-              { icon: "fa-x-ray", title: "Radiology", text: "Digital X-rays, MRI, CT & ultrasound imaging services." },
-              { icon: "fa-person-running", title: "Physiotherapy", text: "Rehabilitation & mobility treatments for all ages." },
-              { icon: "fa-stethoscope", title: "General Checkups", text: "Full-body examinations & routine health assessments." },
-            ].map((item, i) => (
-              <div
-                key={i}
-                className="group bg-white p-8 rounded-2xl shadow-sm hover:shadow-xl border border-gray-100 hover:border-[#11A4D4]/40 transition duration-300"
-                
-              >
-                <div className="w-16 h-16 mx-auto flex items-center justify-center rounded-full 
-                bg-[#11A4D4]/10 group-hover:bg-[#11A4D4]/20 text-[#11A4D4] text-3xl transition">
-                  <i className={`fa-solid ${item.icon}`}></i>
-                </div>
-                <h3 className="mt-6 text-xl font-semibold text-gray-900">{item.title}</h3>
-                <p className="mt-2 text-gray-600 text-sm">{item.text}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* DOCTORS */}
-      <section id="doctors" className="py-24 bg-white">
-        <div className="max-w-6xl mx-auto px-6 text-center">
-          <motion.h2
-            className="text-3xl md:text-4xl font-extrabold text-gray-900"
-            initial={{ y: -50, opacity: 0 }}
-            whileInView={{ y: 0, opacity: 1 }}
-            transition={{ duration: 0.8 }}
-            viewport={{ once: true }}
-            style={{ willChange: "transform, opacity" }} 
-          >
-            Meet Our <span className="text-[#11A4D4]">Doctors</span>
-          </motion.h2>
-          <motion.p
-            className="mt-4 text-gray-600 max-w-2xl mx-auto"
-            initial={{ y: 50, opacity: 0 }}
-            whileInView={{ y: 0, opacity: 1 }}
-            transition={{ duration: 0.8 }}
-            viewport={{ once: true }}
-            style={{ willChange: "transform, opacity" }} 
-          >
-            Our team of highly skilled and compassionate professionals.
-          </motion.p>
-
-          <div className="mt-14 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-12">
-            {[ahmed, hamza, sarah].map((doc, i) => (
-              <div
-                key={i}
-                className="bg-white p-8 rounded-3xl shadow-md hover:shadow-2xl transition transform hover:-translate-y-2"
-               
-              >
-                <div className="w-40 h-40 mx-auto rounded-full overflow-hidden border-4 bg-[#0096FF] border-[#11A4D4] shadow-lg">
-                  <Image
-                    src={doc}
-                    alt="Doctor"
-                    width={160}
-                    height={160}
-                    className="object-cover"
-                  />
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-   
+      {/* FAQ SECTION */}
 
 
 
-{/* CONTACT SECTION */}
-<section id="contact" className="py-24 bg-gray-50">
-  <div className="max-w-6xl mx-auto px-6 text-center">
-    <h2 className="text-3xl md:text-4xl font-extrabold text-gray-900">
+<section id="contact" className="py-20 bg-gray-50">
+  <div className="max-w-6xl mx-auto px-6">
+    
+    <h2 className="text-3xl md:text-4xl font-extrabold text-gray-900 text-center">
       Get in <span className="text-[#11A4D4]">Touch</span>
     </h2>
-    <p className="mt-4 text-gray-600 max-w-2xl mx-auto">
+    <p className="mt-4 text-gray-600 max-w-2xl mx-auto text-center">
       Reach out to us for inquiries or to schedule an appointment.
     </p>
 
-    <div className="mt-14 max-w-3xl mx-auto">
-      <form className="grid grid-cols-1 gap-6">
-        <input
-          type="text"
-          placeholder="Your Name"
-          className="px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#11A4D4]"
-        />
-        <input
-          type="email"
-          placeholder="Your Email"
-          className="px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#11A4D4]"
-        />
-        <textarea
-          placeholder="Your Message"
-          className="px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#11A4D4] resize-none h-32"
-        ></textarea>
-        <button
-          type="submit"
-          className="px-6 py-3 rounded-lg bg-[var(--color-main)] text-white font-semibold hover:bg-[#0e8bb4] transition"
+    {/* هنا بقى مرحلة التقسيم نصين */}
+    <div className="mt-14 grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
+
+      {/* الصورة شمال */}
+   <div className="flex justify-center">
+  <Image
+    src="/contactus.png"
+    alt="Contact Us"
+    width={600}       // كبرنا الحجم الافتراضي
+    height={600}      // كبرنا الحجم الافتراضي
+    className="w-full max-w-lg h-auto object-contain rounded-xl"
+  />
+</div>
+
+
+
+      {/* الفورم يمين */}
+      <div>
+        <form
+          onSubmit={handleSubmit(onSubmit)}
+          className="grid grid-cols-1 gap-6 bg-white p-8 rounded-xl shadow-lg"
         >
-          Send Message
-        </button>
-      </form>
+
+          {/* Name */}
+          <div className="text-left">
+            <input
+              type="text"
+              placeholder="Your Name"
+              className="px-4 py-3 border rounded-lg focus:ring-2 focus:ring-[#11A4D4] w-full"
+              {...register("name", { required: "Name is required" })}
+            />
+            {errors.name && <p className="text-red-500 text-sm mt-1">{errors.name.message}</p>}
+          </div>
+
+          {/* Email */}
+          <div className="text-left">
+            <input
+              type="email"
+              placeholder="Your Email"
+              className="px-4 py-3 border rounded-lg focus:ring-2 focus:ring-[#11A4D4] w-full"
+              {...register("email", {
+                required: "Email is required",
+                pattern: { value: /^\S+@\S+$/, message: "Enter a valid email" },
+              })}
+            />
+            {errors.email && <p className="text-red-500 text-sm mt-1">{errors.email.message}</p>}
+          </div>
+
+          {/* Phone */}
+          <div className="text-left">
+            <input
+              type="tel"
+              placeholder="Your Phone Number"
+              className="px-4 py-3 border rounded-lg focus:ring-2 focus:ring-[#11A4D4] w-full"
+              {...register("phone", {
+                required: "Phone number is required",
+                pattern: { value: /^[0-9]{10,15}$/, message: "Enter a valid phone number" },
+              })}
+            />
+            {errors.phone && <p className="text-red-500 text-sm mt-1">{errors.phone.message}</p>}
+          </div>
+
+          {/* Message */}
+          <div className="text-left">
+            <textarea
+              placeholder="Your Message"
+              className="px-4 py-3 border rounded-lg focus:ring-2 focus:ring-[#11A4D4] resize-none h-32 w-full"
+              {...register("message", { required: "Message is required" })}
+            ></textarea>
+            {errors.message && <p className="text-red-500 text-sm mt-1">{errors.message.message}</p>}
+          </div>
+
+          {/* Submit */}
+          <button
+            type="submit"
+            disabled={loading}
+            className="px-6 py-3 rounded-lg bg-[#11A4D4] text-white font-semibold hover:bg-[#0e8bb4] transition flex items-center justify-center"
+          >
+            {loading ? (
+              <svg
+                className="animate-spin h-5 w-5 text-white"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+              >
+                <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                <path
+                  className="opacity-75"
+                  fill="currentColor"
+                  d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"
+                ></path>
+              </svg>
+            ) : (
+              "Send Message"
+            )}
+          </button>
+
+        </form>
+      </div>
+
     </div>
   </div>
 </section>
 
+
+
+
 {/* FOOTER */}
-<footer className="bg-white text-gray-300 py-12">
-  <div className="max-w-6xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-6">
+<footer className="bg-white text-gray-300 py-12  ">
+  <div className="max-w-6xl mx-auto px-5 flex flex-col md:flex-row justify-between items-center gap-6">
     <div className="text-center md:text-left">
       <h3 className="text-xl font-bold text-main">Clinify</h3>
       <p className="mt-2 text-gray-400 text-sm">
@@ -305,13 +417,13 @@ export default function Clinify() {
     </div>
 
     <div className="flex gap-6">
-      <a href="#" className="hover:text-main transition">
+      <a href="#" className="text-main transition">
         <i className="fa-brands fa-facebook-f"></i>
       </a>
-      <a href="#" className="hover:text-main transition">
+      <a href="#" className="text-main transition">
         <i className="fa-brands fa-twitter"></i>
       </a>
-      <a href="#" className="hover:text-main transition">
+      <a href="#" className="text-main transition">
         <i className="fa-brands fa-instagram"></i>
       </a>
     </div>

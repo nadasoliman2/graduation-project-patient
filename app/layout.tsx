@@ -2,7 +2,6 @@ import { Lato } from "next/font/google";
 import "./globals.css";
 import Navbar from "./_componets/navbar";
 import Chatbot from "./_componets/chatbot";
-import logo from "../public/logo.png"
 const lato = Lato({
   subsets: ["latin"],
   weight: ["400"],
@@ -11,6 +10,9 @@ const lato = Lato({
 export const metadata = {
   title: "Clinify",
   description: "My website",
+   icons: {
+    icon: "/favicon.png",
+  },
 
 };
 
