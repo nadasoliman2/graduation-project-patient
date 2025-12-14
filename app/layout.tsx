@@ -1,7 +1,7 @@
 import { Lato } from "next/font/google";
 import "./globals.css";
-import Navbar from "./_componets/navbar";
-import Chatbot from "./_componets/chatbot";
+import Navbar from "./_components/navbar";
+import Chatbot from "./_components/chatbot";
 const lato = Lato({
   subsets: ["latin"],
   weight: ["400"],

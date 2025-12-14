@@ -28,7 +28,6 @@ export default function Chatbot() {
 
   return (
     <div>
-      {/* @ts-ignore */}
       <elevenlabs-convai
         agent-id="agent_8201k95mrvfef4xtvfvpg2bmses8"
         style={{ width: "350px", height: "500px" }}

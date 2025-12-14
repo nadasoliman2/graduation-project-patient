@@ -9,9 +9,8 @@ import ahmed from "../src/assets/dr ahmed.png";
 import hamza from "../src/assets/dr hamza.png";
 import  sarah from "../src/assets/dr.sarah.png";
 import { useEffect } from "react";
-import WowClient from "../_componets/WowClient";
 import { motion } from "framer-motion";
-import Chatbot from "../_componets/chatbot";
+import Chatbot from "../_components/chatbot";
 import { useForm } from "react-hook-form";
 import { useState } from "react";
 import  contactus from "../src/assets/contactus.png";
@@ -49,7 +48,6 @@ const onSubmit = async (data: any) => {
 
   return (
     <>
-          <WowClient /> {/* مهم لتشغيل WOW.js */}
 
       {/* HERO SECTION */}
       <div
@@ -177,11 +175,24 @@ const onSubmit = async (data: any) => {
           </motion.p>
 
           <div className="mt-14 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
-            {[
-              { icon: "fa-heart", title: "Cardiology", text: "Advanced diagnosis & treatment for heart-related conditions." },
-              { icon: "fa-spray-can-sparkles", title: "Dermatology", text: "Skin treatments, laser therapy & cosmetic dermatology." },
-              { icon: "fa-brain", title: "Neurology", text: "Specialized care for nervous system disorders." },
-            ].map((item, i) => (
+           {[
+  {
+    icon: "fa-heart-pulse",
+    title: "Cardiology",
+    text: "Diagnosis and treatment of heart and cardiovascular diseases using advanced medical care."
+  },
+  {
+    icon: "fa-spray-can-sparkles",
+    title: "Dermatology",
+    text: "Comprehensive skin care, dermatological treatments, laser therapy, and cosmetic services."
+  },
+  {
+    icon: "fa-stethoscope",
+    title: "Internal Medicine",
+    text: "Diagnosis and management of internal diseases and chronic medical conditions."
+  }
+]
+.map((item, i) => (
               <div
                 key={i}
                 className="group bg-white p-8 rounded-2xl shadow-sm hover:shadow-xl border border-gray-100 hover:border-[#11A4D4]/40 transition duration-300"
