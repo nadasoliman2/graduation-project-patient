@@ -3,7 +3,6 @@ import nodemailer from "nodemailer";
 export async function POST(request: Request) {
   const { name, email, message ,phone } = await request.json();
 
-  // ✅ 1️⃣ إعدادات transporter لإيميل clinifyspatient@gmail.com (للعيادة)
   const clinicTransporter = nodemailer.createTransport({
     service: "gmail",
     auth: {
@@ -12,12 +11,11 @@ export async function POST(request: Request) {
     },
   });
 
-  // ✅ 2️⃣ إعدادات transporter لإيميل العيادة (للمستخدم)
   const userTransporter = nodemailer.createTransport({
     service: "gmail",
     auth: {
       user: "nadaemad271@gmail.com",       // إيميل العيادة
-      pass: "pxrgarecawctrqoi",          // App Password من Gmail 
+      pass: "pxrgarecawctrqoi",          
     },
   });
 

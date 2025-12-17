@@ -427,17 +427,7 @@ const onSubmit = async (data: any) => {
       </p>
     </div>
 
-    <div className="flex gap-6">
-      <a href="#" className="text-main transition">
-        <i className="fa-brands fa-facebook-f"></i>
-      </a>
-      <a href="#" className="text-main transition">
-        <i className="fa-brands fa-twitter"></i>
-      </a>
-      <a href="#" className="text-main transition">
-        <i className="fa-brands fa-instagram"></i>
-      </a>
-    </div>
+    
   </div>
 </footer>
 
