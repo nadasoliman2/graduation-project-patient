@@ -29,7 +29,7 @@ export default function Chatbot() {
   return (
     <div>
       <elevenlabs-convai
-        agent-id="agent_8201k95mrvfef4xtvfvpg2bmses8"
+        agent-id="agent_6701krcdzz72e9k9fdsxr9va0xgy"
         style={{ width: "350px", height: "500px" }}
       ></elevenlabs-convai>
     </div>

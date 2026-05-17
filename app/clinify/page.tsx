@@ -14,6 +14,8 @@ import Chatbot from "../_components/chatbot";
 import { useForm } from "react-hook-form";
 import { useState } from "react";
 import  contactus from "../src/assets/contactus.png";
+import { MapPin } from "lucide-react";
+
 export  default  function Clinify() {
 const [loading, setLoading] = useState(false);
 
@@ -45,6 +47,14 @@ const onSubmit = async (data: any) => {
     setLoading(false); // وقف الـ spinner بعد الانتهاء
   }
 };
+const handleOpenChat = () => {
+  const widget = document.querySelector("elevenlabs-convai") as any;
+
+  if (widget) {
+    widget.click(); // كأنك ضغطتي عليه بالماوس
+  }
+};
+
 
   return (
     <>
@@ -71,15 +81,18 @@ const onSubmit = async (data: any) => {
             booking experience through our friendly chatbot.
           </p>
           <div className="flex gap-4 mt-4" >
-            <button className="px-6 py-3 rounded-lg bg-[var(--color-main)] text-white font-semibold hover:bg-[#0e8bb4] transition">
-              Book Appointment
-            </button>
-            <a
+        <button
+  onClick={handleOpenChat}
+  className="px-6 py-3 rounded-lg bg-[var(--color-main)] text-white font-semibold hover:bg-[#0e8bb4] transition"
+>
+  Book Appointment
+</button>
+            {/* <a
               href="#services"
               className="px-6 py-3 rounded-lg border border-gray-300 text-gray-700 hover:bg-gray-100 transition"
             >
               Our Services
-            </a>
+            </a> */}
           </div>
         </motion.div>
 
@@ -415,11 +428,9 @@ const onSubmit = async (data: any) => {
 </section>
 
 
-
-
-{/* FOOTER */}
-<footer className="bg-white text-gray-300 py-12  ">
-  <div className="max-w-6xl mx-auto px-5 flex flex-col md:flex-row justify-between items-center gap-6">
+<footer className="bg-white text-gray-300 py-5 overflow-x-hidden">
+  <div className="max-w-6xl mx-auto px-5 flex flex-col md:flex-row justify-between gap-6 w-full">
+    
     <div className="text-center md:text-left">
       <h3 className="text-xl font-bold text-main">Clinify</h3>
       <p className="mt-2 text-gray-400 text-sm">
@@ -428,8 +439,10 @@ const onSubmit = async (data: any) => {
     </div>
 
     
+
   </div>
 </footer>
+
 
 
     </>
