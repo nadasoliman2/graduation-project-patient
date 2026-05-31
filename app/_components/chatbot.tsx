@@ -32,6 +32,7 @@ export default function Chatbot() {
 
   useEffect(() => {
     if (containerRef.current && typeof window !== "undefined") {
+      // @ts-ignore - elevenlabs-convai is a custom element from external library
       const widget = document.createElement("elevenlabs-convai");
       widget.setAttribute("agent-id", "agent_6701krcdzz72e9k9fdsxr9va0xgy");
       widget.setAttribute("style", "width: 350px; height: 500px;");
