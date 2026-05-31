@@ -354,7 +354,7 @@ const handleOpenChat = () => {
               className="px-4 py-3 border rounded-lg focus:ring-2 focus:ring-[#11A4D4] w-full"
               {...register("name", { required: "Name is required" })}
             />
-            {errors.name && <p className="text-red-500 text-sm mt-1">{errors.name.message}</p>}
+            {errors.name && typeof errors.name.message === "string" && <p className="text-red-500 text-sm mt-1">{errors.name.message}</p>}
           </div>
 
           {/* Email */}
@@ -368,7 +368,7 @@ const handleOpenChat = () => {
                 pattern: { value: /^\S+@\S+$/, message: "Enter a valid email" },
               })}
             />
-            {errors.email && <p className="text-red-500 text-sm mt-1">{errors.email.message}</p>}
+            {errors.email && typeof errors.email.message === "string" && <p className="text-red-500 text-sm mt-1">{errors.email.message}</p>}
           </div>
 
           {/* Phone */}
@@ -382,7 +382,7 @@ const handleOpenChat = () => {
                 pattern: { value: /^[0-9]{10,15}$/, message: "Enter a valid phone number" },
               })}
             />
-            {errors.phone && <p className="text-red-500 text-sm mt-1">{errors.phone.message}</p>}
+            {errors.phone && typeof errors.phone.message === "string" && <p className="text-red-500 text-sm mt-1">{errors.phone.message}</p>}
           </div>
 
           {/* Message */}
@@ -392,7 +392,7 @@ const handleOpenChat = () => {
               className="px-4 py-3 border rounded-lg focus:ring-2 focus:ring-[#11A4D4] resize-none h-32 w-full"
               {...register("message", { required: "Message is required" })}
             ></textarea>
-            {errors.message && <p className="text-red-500 text-sm mt-1">{errors.message.message}</p>}
+            {errors.message && typeof errors.message.message === "string" && <p className="text-red-500 text-sm mt-1">{errors.message.message}</p>}
           </div>
 
           {/* Submit */}
