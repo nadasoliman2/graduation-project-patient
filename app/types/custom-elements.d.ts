@@ -1,12 +1,6 @@
-import React from "react";
-
+import React from 'react';
 declare namespace JSX {
   interface IntrinsicElements {
-    "elevenlabs-convai": React.DetailedHTMLProps<
-      React.HTMLAttributes<HTMLElement> & {
-        "agent-id"?: string;
-      },
-      HTMLElement
-    >;
+    'elevenlabs-convai': React.DetailedHTMLProps<React.HTMLAttributes<HTMLElement>, HTMLElement> & { 'agent-id'?: string; style?: React.CSSProperties; };
   }
 }

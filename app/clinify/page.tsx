@@ -14,8 +14,6 @@ import Chatbot from "../_components/chatbot";
 import { useForm } from "react-hook-form";
 import { useState } from "react";
 import  contactus from "../src/assets/contactus.png";
-import { MapPin } from "lucide-react";
-
 export  default  function Clinify() {
 const [loading, setLoading] = useState(false);
 
@@ -25,6 +23,38 @@ const [loading, setLoading] = useState(false);
   { img: sarah, name: "Dr. Sarah", specialty: "Dermatologist" },
 ];
 const {register,reset, handleSubmit ,formState:{errors}}=useForm();
+
+const openChatbot = () => {
+  setTimeout(() => {
+    const widget = document.querySelector("elevenlabs-convai") as HTMLElement;
+    if (widget) {
+      const shadowRoot = widget.shadowRoot;
+      if (shadowRoot) {
+        const button = shadowRoot.querySelector("button") as HTMLButtonElement;
+        if (button) {
+          button.click();
+        } else {
+          const clickableElement = shadowRoot.querySelector('[role="button"], .chat-button, [class*="button"], [class*="trigger"]') as HTMLElement;
+          if (clickableElement) {
+            clickableElement.click();
+          } else {
+            const allButtons = shadowRoot.querySelectorAll("button");
+            if (allButtons.length > 0) {
+              (allButtons[0] as HTMLButtonElement).click();
+            }
+          }
+        }
+      } else {
+        const button = widget.querySelector("button") as HTMLButtonElement;
+        if (button) {
+          button.click();
+        } else {
+          widget.click();
+        }
+      }
+    }
+  }, 100);
+};
 const onSubmit = async (data: any) => {
   try {
     setLoading(true); // شغل الـ spinner
@@ -47,22 +77,14 @@ const onSubmit = async (data: any) => {
     setLoading(false); // وقف الـ spinner بعد الانتهاء
   }
 };
-const handleOpenChat = () => {
-  const widget = document.querySelector("elevenlabs-convai") as any;
-
-  if (widget) {
-    widget.click(); // كأنك ضغطتي عليه بالماوس
-  }
-};
-
 
   return (
     <>
 
       {/* HERO SECTION */}
       <div
-        className="min-h-screen bg-gray-50 flex flex-col md:flex-row items-center justify-between px-4 md:px-20 py-18 gap-10"
-      
+        className="  bg-[var(--color-main)] min-h-screen bg-gray-50 flex flex-col md:flex-row items-center justify-between px-4 md:px-20 py-18 gap-10"
+        
       >
         {/* Left */}
         <motion.div
@@ -81,18 +103,18 @@ const handleOpenChat = () => {
             booking experience through our friendly chatbot.
           </p>
           <div className="flex gap-4 mt-4" >
-        <button
-  onClick={handleOpenChat}
-  className="px-6 py-3 rounded-lg bg-[var(--color-main)] text-white font-semibold hover:bg-[#0e8bb4] transition"
->
-  Book Appointment
-</button>
-            {/* <a
+            <button 
+              onClick={openChatbot}
+              className="px-6 py-3 rounded-lg bg-[var(--color-main)] text-white font-semibold hover:bg-[#0e8bb4] transition"
+            >
+              Book Appointment
+            </button>
+            <a
               href="#services"
               className="px-6 py-3 rounded-lg border border-gray-300 text-gray-700 hover:bg-gray-100 transition"
             >
               Our Services
-            </a> */}
+            </a>
           </div>
         </motion.div>
 
@@ -114,57 +136,8 @@ const handleOpenChat = () => {
           </div>
         </motion.div>
       </div>
-  {/* DOCTORS */}
-      <section id="doctors" className="py-24 bg-white">
-        <div className="max-w-6xl mx-auto px-6 text-center">
-          <motion.h2
-            className="text-3xl md:text-4xl font-extrabold text-gray-900"
-            initial={{ y: -50, opacity: 0 }}
-            whileInView={{ y: 0, opacity: 1 }}
-            transition={{ duration: 0.8 }}
-            viewport={{ once: true }}
-            style={{ willChange: "transform, opacity" }} 
-          >
-            Meet Our <span className="text-[#11A4D4]">Doctors</span>
-          </motion.h2>
-          <motion.p
-            className="mt-4 text-gray-600 max-w-2xl mx-auto"
-            initial={{ y: 50, opacity: 0 }}
-            whileInView={{ y: 0, opacity: 1 }}
-            transition={{ duration: 0.8 }}
-            viewport={{ once: true }}
-            style={{ willChange: "transform, opacity" }} 
-          >
-            Our team of highly skilled and compassionate professionals.
-          </motion.p>
-
-          <div className="mt-14 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-12">
-            {doctors.map((doc, i) => (
-              <div
-                key={i}
-                className="bg-white p-8 rounded-3xl shadow-md hover:shadow-2xl transition transform hover:-translate-y-2"
-               
-              >
-                <div className="w-40 mb-4 h-40 mx-auto rounded-full overflow-hidden border-4 bg-[#0096FF] border-[#11A4D4] shadow-lg">
-                  <Image
-                    src={doc.img}
-                    alt="Doctor"
-                    width={160}
-                    height={160}
-                    className="object-cover"
-                  />
-                </div>
-                <h2 className="text-[#11A4D4]">{doc.name}</h2>
-                <p className="text-gray-400">{doc.specialty}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-      {/* WHY PATIENTS TRUST US */}
-    
-      {/* SERVICES */}
-      <section id="services" className="py-20 bg-gray-50">
+       {/* SERVICES */}
+      <section id="services" className="py-20  bg-white">
         <div className="max-w-6xl mx-auto px-6 text-center">
           <motion.h2
             className="text-3xl md:text-4xl font-extrabold text-gray-900"
@@ -222,11 +195,53 @@ const handleOpenChat = () => {
           </div>
         </div>
       </section>
+       <section id="doctors" className="py-24   bg-gray-50">
+        <div className="max-w-6xl mx-auto px-6 text-center">
+          <motion.h2
+            className="text-3xl md:text-4xl font-extrabold text-gray-900"
+            initial={{ y: -50, opacity: 0 }}
+            whileInView={{ y: 0, opacity: 1 }}
+            transition={{ duration: 0.8 }}
+            viewport={{ once: true }}
+            style={{ willChange: "transform, opacity" }} 
+          >
+            Meet Our <span className="text-[#11A4D4]">Doctors</span>
+          </motion.h2>
+          <motion.p
+            className="mt-4 text-gray-600 max-w-2xl mx-auto"
+            initial={{ y: 50, opacity: 0 }}
+            whileInView={{ y: 0, opacity: 1 }}
+            transition={{ duration: 0.8 }}
+            viewport={{ once: true }}
+            style={{ willChange: "transform, opacity" }} 
+          >
+            Our team of highly skilled and compassionate professionals.
+          </motion.p>
 
-    
-   
-
-  <section className="py-24 bg-white">
+          <div className="mt-14 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-12">
+            {doctors.map((doc, i) => (
+              <div
+                key={i}
+                className="bg-white p-8 rounded-3xl shadow-md hover:shadow-2xl transition transform hover:-translate-y-2"
+               
+              >
+                <div className="w-40 mb-4 h-40 mx-auto rounded-full overflow-hidden border-4 bg-[#0096FF] border-[#11A4D4] shadow-lg">
+                  <Image
+                    src={doc.img}
+                    alt="Doctor"
+                    width={160}
+                    height={160}
+                    className="object-cover"
+                  />
+                </div>
+                <h2 className="text-[#11A4D4]">{doc.name}</h2>
+                <p className="text-gray-400">{doc.specialty}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+      <section className="py-24 bg-white ">
         <div className="max-w-6xl mx-auto px-6 text-center">
           <motion.h2
             className="text-3xl md:text-4xl font-extrabold text-gray-900"
@@ -309,6 +324,101 @@ const handleOpenChat = () => {
           </div>
         </div>
       </section>
+      {/* CHATBOT FEATURES */}
+<section className="py-20 bg-gray-50">
+  <div className="max-w-6xl mx-auto px-6 text-center">
+    
+    <motion.h2
+      className="text-3xl md:text-4xl font-extrabold text-gray-900"
+      initial={{ y: -50, opacity: 0 }}
+      whileInView={{ y: 0, opacity: 1 }}
+      transition={{ duration: 0.8 }}
+      viewport={{ once: true }}
+      style={{ willChange: "transform, opacity" }}
+    >
+      Meet Your <span className="text-[#11A4D4]">AI Assistant</span>
+    </motion.h2>
+
+    <motion.p
+      className="mt-3 text-gray-600 max-w-2xl mx-auto"
+      initial={{ y: 50, opacity: 0 }}
+      whileInView={{ y: 0, opacity: 1 }}
+      transition={{ duration: 0.8 }}
+      viewport={{ once: true }}
+      style={{ willChange: "transform, opacity" }}
+    >
+      Our smart chatbot is available 24/7 to assist you with everything you need.
+    </motion.p>
+
+    <div className="mt-14 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
+      {[
+        {
+          icon: "fa-brain",
+          title: "Medical Recommendations",
+          text: "Get instant advice based on your symptoms and medical history.",
+        },
+        {
+          icon: "fa-triangle-exclamation",
+          title: "Clinical Triage",
+          text: "Assess urgency and get guided to the right level of care.",
+        },
+        {
+          icon: "fa-pills",
+          title: "AI Pharmacist",
+          text: "Ask about medications, dosages, and interactions anytime.",
+        },
+        {
+          icon: "fa-calendar-check",
+          title: "AI Booking System",
+          text: "Book, reschedule, or cancel appointments in seconds.",
+        },
+      ].map((item, i) => (
+        <motion.div
+          key={i}
+          className="group bg-white p-6 rounded-2xl shadow-sm hover:shadow-xl border border-gray-100 hover:border-[#11A4D4]/40 transition duration-300 text-center"
+          initial={{ y: 40, opacity: 0 }}
+          whileInView={{ y: 0, opacity: 1 }}
+          transition={{ duration: 0.5, delay: i * 0.1 }}
+          viewport={{ once: true }}
+          style={{ willChange: "transform, opacity" }}
+        >
+          <div className="w-14 h-14 mx-auto flex items-center justify-center rounded-full bg-[#11A4D4]/10 group-hover:bg-[#11A4D4]/20 text-[#11A4D4] text-2xl transition">
+            <i className={`fa-solid ${item.icon}`}></i>
+          </div>
+          <h3 className="mt-5 text-base font-semibold text-gray-900">{item.title}</h3>
+          <p className="mt-2 text-gray-500 text-sm leading-relaxed">{item.text}</p>
+        </motion.div>
+      ))}
+    </div>
+
+    {/* CTA */}
+    <motion.div
+      className="mt-10"
+      initial={{ opacity: 0 }}
+      whileInView={{ opacity: 1 }}
+      transition={{ duration: 0.8, delay: 0.4 }}
+      viewport={{ once: true }}
+    >
+      {/* <button
+        onClick={openChatbot}
+        className="px-8 py-3 rounded-lg bg-[#11A4D4] text-white font-semibold hover:bg-[#0e8bb4] transition"
+      >
+        Try it now
+      </button> */}
+    </motion.div>
+
+  </div>
+</section>
+  {/* DOCTORS */}
+     
+      {/* WHY PATIENTS TRUST US */}
+    
+     
+
+    
+   
+
+  
       {/* FAQ SECTION */}
 
 
@@ -354,7 +464,7 @@ const handleOpenChat = () => {
               className="px-4 py-3 border rounded-lg focus:ring-2 focus:ring-[#11A4D4] w-full"
               {...register("name", { required: "Name is required" })}
             />
-            {errors.name && <p className="text-red-500 text-sm mt-1">{errors.name.message}</p>}
+{errors.name && <p className="text-red-500 text-sm mt-1">{errors.name.message as string}</p>}
           </div>
 
           {/* Email */}
@@ -368,7 +478,7 @@ const handleOpenChat = () => {
                 pattern: { value: /^\S+@\S+$/, message: "Enter a valid email" },
               })}
             />
-            {errors.email && <p className="text-red-500 text-sm mt-1">{errors.email.message}</p>}
+{errors.email && <p className="text-red-500 text-sm mt-1">{errors.email.message as string}</p>}
           </div>
 
           {/* Phone */}
@@ -382,7 +492,7 @@ const handleOpenChat = () => {
                 pattern: { value: /^[0-9]{10,15}$/, message: "Enter a valid phone number" },
               })}
             />
-            {errors.phone && <p className="text-red-500 text-sm mt-1">{errors.phone.message}</p>}
+{errors.phone && <p className="text-red-500 text-sm mt-1">{errors.phone.message as string}</p>}
           </div>
 
           {/* Message */}
@@ -392,8 +502,7 @@ const handleOpenChat = () => {
               className="px-4 py-3 border rounded-lg focus:ring-2 focus:ring-[#11A4D4] resize-none h-32 w-full"
               {...register("message", { required: "Message is required" })}
             ></textarea>
-            {errors.message && <p className="text-red-500 text-sm mt-1">{errors.message.message}</p>}
-          </div>
+{errors.message && <p className="text-red-500 text-sm mt-1">{errors.message.message as string}</p>}          </div>
 
           {/* Submit */}
           <button
@@ -428,21 +537,21 @@ const handleOpenChat = () => {
 </section>
 
 
-<footer className="bg-white text-gray-300 py-5 overflow-x-hidden">
-  <div className="max-w-6xl mx-auto px-5 flex flex-col md:flex-row justify-between gap-6 w-full">
-    
+
+
+{/* FOOTER */}
+<footer className="bg-white text-gray-300 py-12  ">
+  <div className="max-w-6xl mx-auto px-5 flex flex-col md:flex-row justify-between items-center gap-6">
     <div className="text-center md:text-left">
       <h3 className="text-xl font-bold text-main">Clinify</h3>
       <p className="mt-2 text-gray-400 text-sm">
-        © 2025 Clinify. All rights reserved.
+        © 2026 Clinify. All rights reserved.
       </p>
     </div>
 
     
-
   </div>
 </footer>
-
 
 
     </>
