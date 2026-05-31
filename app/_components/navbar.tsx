@@ -17,7 +17,8 @@ export default function Navbar() {
       sections.forEach((section) => {
         const sectionTop = section.offsetTop - 120;
         if (window.scrollY >= sectionTop) {
-          current = section.getAttribute("id");
+          // ✅ إصلاح 1: ?? current عشان نتجنب null
+          current = section.getAttribute("id") ?? current;
         }
       });
 
@@ -28,7 +29,8 @@ export default function Navbar() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const linkClass = (name) =>
+  // ✅ إصلاح 2: إضافة type للـ parameter
+  const linkClass = (name: string) =>
     `py-2 px-3 transition ${
       active === name
         ? "text-[#11A4D4] font-semibold border-b-2 border-[#11A4D4]"

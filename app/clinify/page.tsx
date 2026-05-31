@@ -62,7 +62,7 @@ const handleOpenChat = () => {
       {/* HERO SECTION */}
       <div
         className="min-h-screen bg-gray-50 flex flex-col md:flex-row items-center justify-between px-4 md:px-20 py-18 gap-10"
-        style={{ "--color-main": "#11A4D4" }}
+      
       >
         {/* Left */}
         <motion.div
